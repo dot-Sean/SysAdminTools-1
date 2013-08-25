@@ -20,11 +20,16 @@ foreach ( @$look_full ) {
     }
 }
 
-print @$look_full;
+my @split_lines = map { split( /\n/, $_ ) } @$look_stdout;
+my @matchip = grep { /num|$lookupip/ } @split_lines;
+foreach my $matchip ( @matchip ) {
+    print "$matchip\n";
+}
+
 print "\nID to delist [default = 0 (none)]: ";
 chomp( my $delid = <> );
 
-if ( $delid eq "" || $delid == 0 || $delid !~ [0-9] ) {
+if ( $delid eq "" || $delid == 0 ) {
     print "No changes made.\n";
     exit 0;
 }
@@ -36,7 +41,7 @@ else {
 
     if ( !$del_success ) {
         print "Could not drop ID $delid: ";
-        print join " ", @$del_full;
+        print @$del_stderr;
     }
     else {
         system( "/sbin/service iptables save 1> /dev/null" );
