@@ -26,6 +26,8 @@ ip_url = 'http://ifconfig.me/ip'
 get_ip = urllib2.urlopen(ip_url)
 my_ip = get_ip.read().strip()
 
+mobile_ph = '+18885551212' # verified phone number
+twilio_ph = '+19995551212' # Twilio phone number
 account_sid = '<Twilio Account SID>'
 auth_token = '<Twilio Authentication Token>'
 client = TwilioRestClient(account_sid, auth_token)
@@ -41,13 +43,13 @@ if isfile(ip_file):
             log.info("IP address has changed -- %s", my_ip)
             with open(ip_file, 'w') as new_ip:
                 new_ip.write(my_ip)
-            sms = client.messages.create(to='+1<your_phone#>',
-                                        from_='+1<twilio_phone#>',
+            sms = client.messages.create(to=mobile_ph,
+                                        from_=twilio_ph,
                                         body="New IP: "+my_host+": "+my_ip)
 else:
     with open(ip_file, 'w') as save_ip:
         save_ip.write(my_ip)
     log.info("IP address established -- %s", my_ip)
-    sms = client.messages.create(to='+1<your_phone#>',
-                                from_='+1<twilio_phone#>',
+    sms = client.messages.create(to=mobile_ph,
+                                from_=twilio_ph,
                                 body="Set IP: "+my_host+": "+my_ip)
