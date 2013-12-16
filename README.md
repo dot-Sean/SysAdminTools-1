@@ -29,3 +29,13 @@ USAGE: iplist.pl
 Prompts for an IP address entry, and searches your iptables chain  
 for a matching entry. If a match is found, delete option is then  
 made available, based on listing ID.  
+
+***
+
+## NEWIP.py
+
+USAGE: newip.py  
+
+Using the Twilio service, this will SMS your new IP address. Helpful when your  
+ISP changes your IP without notice. Setting this script on a cron can be a good  
+use, as verification of IP change can trigger the SMS.  
